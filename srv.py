@@ -88,6 +88,7 @@ def check():
         cur = conn.cursor()
         cur.execute('''select * from requests where id = ? ''', (flask.request.args.get('id'),))
         rows = cur.fetchall()
+        conn.close()
         if len(rows):                           # если что-то с таким ИД присутствует в базе возвращаем результат
             if rows[0][4] == 200:               # если процедура завершена возвращаем хэш
                 return resp(rows[0][4], {'md5': rows[0][2], 'status': rows[0][5], 'url': rows[0][1]})
